@@ -35,7 +35,7 @@
       padding: 30px;
       border-radius: 16px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      max-width: 450px;
+      max-width: 500px;
       width: 100%;
       text-align: center;
     }
@@ -45,7 +45,7 @@
       margin-bottom: 20px;
     }
 
-    input {
+    input, textarea {
       width: 100%;
       padding: 12px;
       margin: 10px 0;
@@ -63,6 +63,7 @@
       border-radius: 10px;
       font-size: 1rem;
       cursor: pointer;
+      margin-top: 10px;
     }
 
     button:hover {
@@ -114,7 +115,15 @@
       display: none;
     }
 
-    /* TOAST MODERN */
+    .admin-btn {
+      margin-top: 10px;
+      background: #4b5563;
+    }
+
+    .admin-btn:hover {
+      background: #374151;
+    }
+
     .toast {
       position: fixed;
       top: 20px;
@@ -147,7 +156,7 @@
         background: var(--card-dark);
       }
 
-      input {
+      input, textarea {
         background-color: #4b5563;
         color: white;
         border-color: #6b7280;
@@ -161,15 +170,18 @@
       .logout-btn {
         background-color: #dc2626;
       }
+
+      .admin-btn {
+        background-color: #6b7280;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- TOASTER -->
   <div id="toast" class="toast">Notifikasi</div>
 
-  <!-- LOGIN FORM -->
+  <!-- LOGIN -->
   <div class="card" id="loginCard">
     <h2>Login</h2>
     <input type="text" id="username" placeholder="Username" />
@@ -181,42 +193,67 @@
   <div class="card hidden" id="paymentCard">
     <h2>All Payment</h2>
 
-    <div class="pay-method" onclick="copyToClipboard('082264176976')">
+    <div class="pay-method" onclick="copyToClipboard(data.dana)">
       <div class="left">
-        <img src="https://img.icons8.com/color/48/000000/dana.png" alt="DANA" />
-        <span class="number">0886282627</span>
+        <img src="https://img.icons8.com/color/48/000000/dana.png" />
+        <span class="number" id="danaNumber">0886xxxx</span>
       </div>
     </div>
 
-    <div class="pay-method" onclick="copyToClipboard('82962829928')">
+    <div class="pay-method" onclick="copyToClipboard(data.gopay)">
       <div class="left">
-        <img src="https://img.icons8.com/color/48/000000/google-pay-india.png" alt="GoPay" />
-        <span class="number">82962829928</span>
+        <img src="https://img.icons8.com/color/48/000000/google-pay-india.png" />
+        <span class="number" id="gopayNumber">8296xxxx</span>
       </div>
     </div>
 
-    <div class="pay-method" onclick="copyToClipboard('92829290010')">
+    <div class="pay-method" onclick="copyToClipboard(data.ovo)">
       <div class="left">
-        <img src="https://seeklogo.com/images/O/ovo-logo-FAF0C9A290-seeklogo.com.png" alt="OVO" style="width:32px;height:32px;">
-        <span class="number">92829290010</span>
+        <img src="https://seeklogo.com/images/O/ovo-logo-FAF0C9A290-seeklogo.com.png" style="width:32px;height:32px;" />
+        <span class="number" id="ovoNumber">9282xxxx</span>
       </div>
     </div>
 
-    <img class="qris-img" src="https://k.top4top.io/p_3474n29381.jpg" alt="QRIS" />
+    <img id="qrisImage" class="qris-img" src="" alt="QRIS" />
 
+    <button class="admin-btn hidden" id="adminPanelBtn" onclick="showAdminPanel()">🛠 Panel Admin</button>
     <button class="logout-btn" onclick="logout()">Logout</button>
   </div>
 
+  <!-- ADMIN PANEL -->
+  <div class="card hidden" id="adminPanel">
+    <h2>Panel Admin</h2>
+    <input id="editDana" placeholder="Nomor DANA" />
+    <input id="editGopay" placeholder="Nomor GoPay" />
+    <input id="editOvo" placeholder="Nomor OVO" />
+    <input id="editQRIS" placeholder="URL Gambar QRIS" />
+    <button onclick="saveEdits()">💾 Simpan</button>
+    <button class="logout-btn" onclick="backToPayment()">⬅ Kembali</button>
+  </div>
+
   <script>
-    // Multi-user login data
-    const users = {
-      "admin": "123456",
-      "kasir": "HanzyyXy"
-    };
+    const users = { admin: "123456", kasir: "kasirpass" };
+    let currentUser = null;
 
     const loginCard = document.getElementById('loginCard');
     const paymentCard = document.getElementById('paymentCard');
+    const adminPanel = document.getElementById('adminPanel');
+    const adminBtn = document.getElementById('adminPanelBtn');
     const toast = document.getElementById('toast');
+
+    const data = JSON.parse(localStorage.getItem("paymentData")) || {
+      dana: "0886282627",
+      gopay: "82962829928",
+      ovo: "92829290010",
+      qris: "https://i.ibb.co/YyP2v7F/qris-example.png"
+    };
+
+    function updatePaymentUI() {
+      document.getElementById("danaNumber").innerText = data.dana;
+      document.getElementById("gopayNumber").innerText = data.gopay;
+      document.getElementById("ovoNumber").innerText = data.ovo;
+      document.getElementById("qrisImage").src = data.qris;
+    }
 
     function showToast(msg, success = true) {
       toast.textContent = msg;
@@ -226,13 +263,15 @@
     }
 
     function handleLogin() {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-
-      if (users[username] && users[username] === password) {
+      const user = document.getElementById("username").value.trim();
+      const pass = document.getElementById("password").value.trim();
+      if (users[user] && users[user] === pass) {
+        currentUser = user;
         loginCard.classList.add('hidden');
         paymentCard.classList.remove('hidden');
-        showToast(`✅ Selamat datang, ${username}`);
+        adminBtn.classList.toggle('hidden', user !== "admin");
+        updatePaymentUI();
+        showToast(`✅ Selamat datang, ${user}`);
       } else {
         showToast("❌ Username atau password salah", false);
       }
@@ -240,16 +279,43 @@
 
     function copyToClipboard(text) {
       navigator.clipboard.writeText(text).then(() => {
-        showToast(`✅ ${text} disalin!`);
+        showToast(`📋 ${text} disalin`);
       });
     }
 
     function logout() {
+      currentUser = null;
       paymentCard.classList.add('hidden');
+      adminPanel.classList.add('hidden');
       loginCard.classList.remove('hidden');
       document.getElementById("username").value = '';
       document.getElementById("password").value = '';
-      showToast("🔓 Logout berhasil", true);
+      showToast("🔓 Logout berhasil");
+    }
+
+    function showAdminPanel() {
+      paymentCard.classList.add('hidden');
+      adminPanel.classList.remove('hidden');
+      document.getElementById("editDana").value = data.dana;
+      document.getElementById("editGopay").value = data.gopay;
+      document.getElementById("editOvo").value = data.ovo;
+      document.getElementById("editQRIS").value = data.qris;
+    }
+
+    function backToPayment() {
+      adminPanel.classList.add('hidden');
+      paymentCard.classList.remove('hidden');
+    }
+
+    function saveEdits() {
+      data.dana = document.getElementById("editDana").value.trim();
+      data.gopay = document.getElementById("editGopay").value.trim();
+      data.ovo = document.getElementById("editOvo").value.trim();
+      data.qris = document.getElementById("editQRIS").value.trim();
+      localStorage.setItem("paymentData", JSON.stringify(data));
+      updatePaymentUI();
+      showToast("✅ Data pembayaran diperbarui");
+      backToPayment();
     }
   </script>
 
