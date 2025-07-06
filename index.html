@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login Panel</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login & Payment</title>
   <style>
     :root {
       --bg-light: #f3f4f6;
@@ -13,67 +13,110 @@
       --text-light: #1f2937;
       --text-dark: #f9fafb;
       --primary: #3b82f6;
-      --primary-dark: #2563eb;
+      --danger: #ef4444;
     }
 
     body {
-      margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background: var(--bg-light);
+      margin: 0;
+      padding: 20px;
       color: var(--text-light);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      transition: 0.3s ease;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
-    .login-box {
+    .card {
       background: var(--card-light);
-      padding: 40px;
+      padding: 30px;
       border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-      width: 90%;
-      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      max-width: 450px;
+      width: 100%;
       text-align: center;
     }
 
     h2 {
-      margin-bottom: 24px;
       color: var(--primary);
+      margin-bottom: 20px;
     }
 
-    input[type="text"],
-    input[type="password"] {
+    input {
       width: 100%;
       padding: 12px;
-      margin: 10px 0 20px;
-      border: 1px solid #d1d5db;
+      margin: 10px 0;
+      border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 1rem;
-      background-color: #f9fafb;
     }
 
     button {
       width: 100%;
+      padding: 12px;
       background: var(--primary);
       color: white;
-      padding: 12px;
-      font-size: 1rem;
       border: none;
       border-radius: 10px;
+      font-size: 1rem;
       cursor: pointer;
-      transition: background 0.3s ease;
     }
 
     button:hover {
-      background: var(--primary-dark);
+      background: #2563eb;
     }
 
     .error {
       color: red;
-      margin-top: 10px;
       font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    .pay-method {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #f9fafb;
+      padding: 14px;
+      margin: 12px 0;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      cursor: pointer;
+    }
+
+    .pay-method img {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+    }
+
+    .number {
+      font-family: monospace;
+      font-size: 1rem;
+    }
+
+    .qris-img {
+      width: 100%;
+      max-width: 300px;
+      margin-top: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .logout-btn {
+      margin-top: 20px;
+      background-color: var(--danger);
+    }
+
+    .hidden {
+      display: none;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -82,44 +125,97 @@
         color: var(--text-dark);
       }
 
-      .login-box {
+      .card {
         background: var(--card-dark);
       }
 
       input {
         background-color: #4b5563;
         color: white;
-        border: 1px solid #6b7280;
+        border-color: #6b7280;
+      }
+
+      .pay-method {
+        background-color: #4b5563;
+        border-color: #6b7280;
+      }
+
+      .logout-btn {
+        background-color: #dc2626;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="login-box">
+  <!-- LOGIN FORM -->
+  <div class="card" id="loginCard">
     <h2>Login Admin</h2>
-    <input type="text" id="username" placeholder="Username" autocomplete="off" />
-    <input type="password" id="password" placeholder="Password" autocomplete="off" />
-    <button onclick="login()">Login</button>
-    <div class="error" id="errorMsg"></div>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="handleLogin()">Login</button>
+    <div class="error" id="loginError"></div>
+  </div>
+
+  <!-- PAYMENT SECTION -->
+  <div class="card hidden" id="paymentCard">
+    <h2>All Payment</h2>
+
+    <div class="pay-method" onclick="copyToClipboard('0886282627')">
+      <div class="left">
+        <img src="https://img.icons8.com/color/48/000000/dana.png" alt="DANA" />
+        <span class="number">0886282627</span>
+      </div>
+    </div>
+
+    <div class="pay-method" onclick="copyToClipboard('82962829928')">
+      <div class="left">
+        <img src="https://img.icons8.com/color/48/000000/google-pay-india.png" alt="GoPay" />
+        <span class="number">82962829928</span>
+      </div>
+    </div>
+
+    <div class="pay-method" onclick="copyToClipboard('92829290010')">
+      <div class="left">
+        <img src="https://seeklogo.com/images/O/ovo-logo-FAF0C9A290-seeklogo.com.png" alt="OVO" style="width:32px;height:32px;">
+        <span class="number">92829290010</span>
+      </div>
+    </div>
+
+    <img class="qris-img" src="https://i.ibb.co/YyP2v7F/qris-example.png" alt="QRIS" />
+
+    <button class="logout-btn" onclick="logout()">Logout</button>
   </div>
 
   <script>
-    function login() {
+    const loginCard = document.getElementById('loginCard');
+    const paymentCard = document.getElementById('paymentCard');
+
+    function handleLogin() {
       const user = document.getElementById("username").value.trim();
       const pass = document.getElementById("password").value.trim();
-      const error = document.getElementById("errorMsg");
+      const error = document.getElementById("loginError");
 
-      // Ganti username dan password sesuai kebutuhan
-      const validUser = "admin";
-      const validPass = "123456";
-
-      if (user === validUser && pass === validPass) {
+      if (user === "admin" && pass === "123456") {
+        loginCard.classList.add('hidden');
+        paymentCard.classList.remove('hidden');
         error.innerText = "";
-        window.location.href = "index.html"; // halaman tujuan setelah login
       } else {
-        error.innerText = "Username atau password salah!";
+        error.innerText = "❌ Username atau password salah!";
       }
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert("✅ " + text + " disalin ke clipboard");
+      });
+    }
+
+    function logout() {
+      paymentCard.classList.add('hidden');
+      loginCard.classList.remove('hidden');
+      document.getElementById("username").value = '';
+      document.getElementById("password").value = '';
     }
   </script>
 
