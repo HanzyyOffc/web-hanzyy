@@ -2,65 +2,83 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pembayaran QRIS</title>
   <style>
+    :root {
+      --bg-light: #f3f4f6;
+      --bg-dark: #1f2937;
+      --text-light: #1f2937;
+      --text-dark: #f9fafb;
+      --card-light: #ffffff;
+      --card-dark: #374151;
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      padding: 0;
-      background: linear-gradient(145deg, #f3f4f6, #dbeafe);
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-light);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      transition: 0.3s ease;
     }
 
     .container {
-      background: #ffffff;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      background: var(--card-light);
       padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       max-width: 500px;
       width: 90%;
       text-align: center;
+      transition: 0.3s ease;
     }
 
     h1 {
       margin-bottom: 20px;
-      color: #1e3a8a;
+      color: var(--primary);
     }
 
     .pay-method {
-      margin: 15px 0;
-      padding: 15px;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      background-color: #f9fafb;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      transition: all 0.2s ease-in-out;
+      justify-content: space-between;
+      background-color: #f9fafb;
+      padding: 12px;
+      border-radius: 12px;
+      margin: 10px 0;
+      border: 1px solid #e5e7eb;
+      transition: 0.2s;
     }
 
     .pay-method:hover {
-      background-color: #f1f5f9;
+      background-color: #f3f4f6;
     }
 
-    .label {
-      font-weight: bold;
-      color: #374151;
+    .pay-method img {
+      height: 32px;
+      width: 32px;
+      margin-right: 10px;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
     }
 
     .number {
       font-family: monospace;
       font-size: 1rem;
       margin-right: 10px;
-      color: #111827;
     }
 
     button.copy-btn {
-      background-color: #3b82f6;
+      background-color: var(--primary);
       color: white;
       border: none;
       padding: 6px 12px;
@@ -70,7 +88,7 @@
     }
 
     button.copy-btn:hover {
-      background-color: #2563eb;
+      background-color: var(--primary-dark);
     }
 
     .qris-img {
@@ -91,6 +109,30 @@
       font-size: 0.9rem;
       color: #6b7280;
     }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: var(--bg-dark);
+        color: var(--text-dark);
+      }
+
+      .container {
+        background: var(--card-dark);
+      }
+
+      .pay-method {
+        background-color: #4b5563;
+        border-color: #6b7280;
+      }
+
+      .pay-method:hover {
+        background-color: #374151;
+      }
+
+      .footer {
+        color: #9ca3af;
+      }
+    }
   </style>
 </head>
 <body>
@@ -99,30 +141,34 @@
     <h1>Pembayaran Digital</h1>
 
     <div class="pay-method">
-      <span class="label">DANA:</span>
-      <span class="number" id="dana">0886282627</span>
+      <div class="left">
+        <img src="https://img.icons8.com/color/48/000000/dana.png" alt="DANA" />
+        <span class="number" id="dana">082264176976</span>
+      </div>
       <button class="copy-btn" onclick="copyText('dana')">Salin</button>
     </div>
 
     <div class="pay-method">
-      <span class="label">GoPay:</span>
-      <span class="number" id="gopay">82962829928</span>
+      <div class="left">
+        <img src="https://img.icons8.com/color/48/000000/google-pay-india.png" alt="GoPay" />
+        <span class="number" id="gopay">TIDAK ADA</span>
+      </div>
       <button class="copy-btn" onclick="copyText('gopay')">Salin</button>
     </div>
 
     <div class="pay-method">
-      <span class="label">OVO:</span>
-      <span class="number" id="ovo">92829290010</span>
+      <div class="left">
+        <img src="https://seeklogo.com/images/O/ovo-logo-FAF0C9A290-seeklogo.com.png" alt="OVO" style="width:32px; height:32px;"/>
+        <span class="number" id="ovo">TIDAK ADA</span>
+      </div>
       <button class="copy-btn" onclick="copyText('ovo')">Salin</button>
     </div>
 
-    <div class="qris">
-      <h2 style="margin-top: 30px; color:#1f2937;">Scan QRIS</h2>
-      <img src="LINK_GAMBAR_QRIS" alt="QRIS Image" class="qris-img" />
-    </div>
+    <h2 style="margin-top: 30px;">Scan QRIS</h2>
+    <img src="https://k.top4top.io/p_3474n29381.jpg" alt="QRIS Payment" class="qris-img" />
 
     <div class="footer">
-      © 2025 | Sistem Pembayaran Aman
+      © 2025 | Sistem Pembayaran Aman & Cepat
     </div>
   </div>
 
