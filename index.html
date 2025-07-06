@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pembayaran QRIS</title>
   <style>
     :root {
@@ -14,6 +14,7 @@
       --card-dark: #374151;
       --primary: #3b82f6;
       --primary-dark: #2563eb;
+      --toast-bg: #10b981;
     }
 
     body {
@@ -53,6 +54,7 @@
       border-radius: 12px;
       margin: 10px 0;
       border: 1px solid #e5e7eb;
+      cursor: pointer;
       transition: 0.2s;
     }
 
@@ -74,21 +76,7 @@
     .number {
       font-family: monospace;
       font-size: 1rem;
-      margin-right: 10px;
-    }
-
-    button.copy-btn {
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button.copy-btn:hover {
-      background-color: var(--primary-dark);
+      color: #111827;
     }
 
     .qris-img {
@@ -108,6 +96,45 @@
       margin-top: 25px;
       font-size: 0.9rem;
       color: #6b7280;
+    }
+
+    .back-btn {
+      margin-top: 25px;
+      background-color: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: var(--toast-bg);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(-20px);
+      pointer-events: none;
+      transition: all 0.4s ease;
+      z-index: 9999;
+      font-weight: 500;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -132,6 +159,14 @@
       .footer {
         color: #9ca3af;
       }
+
+      .back-btn {
+        background-color: #1d4ed8;
+      }
+
+      .back-btn:hover {
+        background-color: #1e40af;
+      }
     }
   </style>
 </head>
@@ -140,46 +175,56 @@
   <div class="container">
     <h1>Pembayaran Digital</h1>
 
-    <div class="pay-method">
+    <div class="pay-method" onclick="copyNumber('0886282627')">
       <div class="left">
         <img src="https://img.icons8.com/color/48/000000/dana.png" alt="DANA" />
-        <span class="number" id="dana">082264176976</span>
+        <span class="number">0886282627</span>
       </div>
-      <button class="copy-btn" onclick="copyText('dana')">Salin</button>
     </div>
 
-    <div class="pay-method">
+    <div class="pay-method" onclick="copyNumber('82962829928')">
       <div class="left">
         <img src="https://img.icons8.com/color/48/000000/google-pay-india.png" alt="GoPay" />
-        <span class="number" id="gopay">TIDAK ADA</span>
+        <span class="number">82962829928</span>
       </div>
-      <button class="copy-btn" onclick="copyText('gopay')">Salin</button>
     </div>
 
-    <div class="pay-method">
+    <div class="pay-method" onclick="copyNumber('92829290010')">
       <div class="left">
-        <img src="https://seeklogo.com/images/O/ovo-logo-FAF0C9A290-seeklogo.com.png" alt="OVO" style="width:32px; height:32px;"/>
-        <span class="number" id="ovo">TIDAK ADA</span>
+        <img src="https://seeklogo.com/images/O/ovo-logo-FAF0C9A290-seeklogo.com.png" alt="OVO" style="width:32px; height:32px;" />
+        <span class="number">92829290010</span>
       </div>
-      <button class="copy-btn" onclick="copyText('ovo')">Salin</button>
     </div>
 
     <h2 style="margin-top: 30px;">Scan QRIS</h2>
-    <img src="https://k.top4top.io/p_3474n29381.jpg" alt="QRIS Payment" class="qris-img" />
+    <img src="LINK_GAMBAR_QRIS" alt="QRIS Payment" class="qris-img" />
+
+    <button class="back-btn" onclick="goBack()">← Kembali ke Beranda</button>
 
     <div class="footer">
       © 2025 | Sistem Pembayaran Aman & Cepat
     </div>
   </div>
 
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">✅ Nomor disalin!</div>
+
   <script>
-    function copyText(id) {
-      const text = document.getElementById(id).innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        alert(`✅ Nomor ${id.toUpperCase()} disalin: ${text}`);
+    function copyNumber(number) {
+      navigator.clipboard.writeText(number).then(() => {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        toast.textContent = `✅ ${number} disalin ke clipboard`;
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 2500);
       }).catch(() => {
         alert('❌ Gagal menyalin!');
       });
+    }
+
+    function goBack() {
+      window.location.href = '/'; // Ganti jika beranda kamu berbeda
     }
   </script>
 
