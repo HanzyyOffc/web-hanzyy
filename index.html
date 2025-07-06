@@ -35,6 +35,7 @@
   <p>DANA PRAIOFFC: <span id="danaPrai" class="font-mono"></span></p>
   <img id="qris" src="" alt="QRIS" class="mt-4 w-40 rounded" />
   <button id="adminButton" onclick="showAdmin()" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded">Panel Admin</button>
+  <button onclick="logout()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Logout</button>
 </div>
 
 <!-- ⚙️ ADMIN PANEL -->
@@ -76,8 +77,8 @@
 <!-- 📜 SCRIPT -->
 <script>
 const userAccounts = [
-  { username: "adm", password: "5", role: "admin" },
-  { username: "user", password: "user123", role: "user" },
+  { username: "adm", password: "109", role: "admin" },
+  { username: "user", password: "user", role: "user" },
   { username: "kasir", password: "kasir123", role: "kasir" }
 ];
 
@@ -111,6 +112,12 @@ function doLogin() {
   render();
   document.getElementById("dashboard").classList.remove("hidden");
   document.getElementById("adminButton").classList.toggle("hidden", user.role !== "admin");
+}
+
+function logout() {
+  localStorage.removeItem("currentVisitorName");
+  localStorage.removeItem("currentVisitorRole");
+  location.reload();
 }
 
 function addLoginLog(username, role) {
@@ -185,7 +192,7 @@ function showToast(message) {
 }
 
 function deleteUser(username) {
-  if (!confirm(`Yakin ingin menghapus data user "${username}"?`)) return;
+  if (!confirm(`Yakin ingin menghapus data user \"${username}\"?`)) return;
   loginLogs = loginLogs.filter(log => log.username !== username);
   localStorage.setItem("loginLogs", JSON.stringify(loginLogs));
   renderAllUsers();
@@ -216,7 +223,7 @@ function saveUserEdit() {
 
   localStorage.setItem("loginLogs", JSON.stringify(loginLogs));
   renderAllUsers();
-  showToast(`✏️ Data user "${username}" diperbarui`);
+  showToast(`✏️ Data user \"${username}\" diperbarui`);
   document.getElementById("editUserBox").classList.add("hidden");
 }
 
