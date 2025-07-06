@@ -1,252 +1,231 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel QR Pembayaran</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel QR Pembayaran</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
 <!-- 🔒 PANEL MASUKKAN NAMA -->
 <div id="welcomePanel" class="fixed inset-0 flex flex-col items-center justify-center bg-white z-50">
-  <div class="bg-white p-6 rounded-xl shadow-md text-center">
-    <h2 class="text-xl font-semibold mb-4">Selamat Datang!</h2>
-    <p class="mb-2">Silakan masukkan nama Anda:</p>
-    <input id="inputName" type="text" placeholder="Nama Anda"
-      class="border border-gray-300 p-2 rounded w-full mb-4" />
-    <button onclick="saveUserName()" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Lanjut</button>
-  </div>
+  <div class="bg-white p-6 rounded-xl shadow-md text-center">
+    <h2 class="text-xl font-semibold mb-4">Selamat Datang!</h2>
+    <p class="mb-2">Silakan masukkan nama Anda:</p>
+    <input id="inputName" type="text" placeholder="Nama Anda"
+      class="border border-gray-300 p-2 rounded w-full mb-4" />
+    <button onclick="saveUserName()" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Lanjut</button>
+  </div>
 </div>
 
 <!-- 🔐 LOGIN PANEL -->
 <div id="login" class="hidden max-w-sm mx-auto mt-20 p-6 bg-white rounded-xl shadow">
-  <h2 class="text-xl font-semibold mb-4">Login Panel</h2>
-  <input type="text" id="username" placeholder="Username" class="border p-2 rounded w-full mb-2" />
-  <input type="password" id="password" placeholder="Password" class="border p-2 rounded w-full mb-4" />
-  <button onclick="doLogin()" class="bg-green-600 text-white px-4 py-2 rounded w-full">Login</button>
+  <h2 class="text-xl font-semibold mb-4">Login Panel</h2>
+  <input type="text" id="username" placeholder="Username" class="border p-2 rounded w-full mb-2" />
+  <input type="password" id="password" placeholder="Password" class="border p-2 rounded w-full mb-4" />
+  <button onclick="doLogin()" class="bg-green-600 text-white px-4 py-2 rounded w-full">Login</button>
 </div>
 
 <!-- 🧾 DASHBOARD -->
 <div id="dashboard" class="hidden max-w-xl mx-auto mt-10 p-6 bg-white rounded-xl shadow">
-  <h2 class="text-2xl font-bold mb-4">QR Pembayaran</h2>
-  <p class="mb-2 text-sm text-gray-500">👤 Login sebagai: <span id="userName"></span> (<span id="userRole"></span>)</p>
-  <p>DANA: <span id="dana" class="font-mono"></span></p>
-  <p>GOPAY: <span id="gopay" class="font-mono"></span></p>
-  <p>OVO: <span id="ovo" class="font-mono"></span></p>
-  <img id="qris" src="" alt="QRIS" class="mt-4 w-40 rounded" />
-  <button id="adminButton" onclick="showAdmin()" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded">Panel Admin</button>
+  <h2 class="text-2xl font-bold mb-4">QR Pembayaran</h2>
+  <p class="mb-2 text-sm text-gray-500">👤 Login sebagai: <span id="userName"></span> (<span id="userRole"></span>)</p>
+  <p>DANA HANZYY: <span id="danaHanz" class="font-mono"></span></p>
+  <p>DANA PRAIOFFC: <span id="danaPrai" class="font-mono"></span></p>
+  <img id="qris" src="" alt="QRIS" class="mt-4 w-40 rounded" />
+  <button id="adminButton" onclick="showAdmin()" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded">Panel Admin</button>
 </div>
 
 <!-- ⚙️ ADMIN PANEL -->
 <div id="adminPanel" class="hidden max-w-xl mx-auto mt-10 p-6 bg-white rounded-xl shadow">
-  <h2 class="text-2xl font-bold mb-2">Admin Panel</h2>
-  <p class="mb-4 text-sm text-gray-500">👤 Login sebagai: <span id="userNameAdmin"></span></p>
-  <label class="block mb-2">Edit DANA:</label>
-  <input id="editDana" class="border p-2 w-full rounded mb-3" />
-  <label class="block mb-2">Edit GOPAY:</label>
-  <input id="editGopay" class="border p-2 w-full rounded mb-3" />
-  <label class="block mb-2">Edit OVO:</label>
-  <input id="editOvo" class="border p-2 w-full rounded mb-3" />
-  <label class="block mb-2">Edit Link QRIS:</label>
-  <input id="editQRIS" class="border p-2 w-full rounded mb-3" />
-  <button onclick="saveEdit()" class="bg-green-600 text-white px-4 py-2 rounded w-full mb-4">Simpan</button>
-  <button onclick="backToDashboard()" class="bg-gray-400 text-white px-4 py-2 rounded w-full">Kembali</button>
+  <h2 class="text-2xl font-bold mb-2">Admin Panel</h2>
+  <p class="mb-4 text-sm text-gray-500">👤 Login sebagai: <span id="userNameAdmin"></span></p>
+  <label class="block mb-2">Edit DANA HANZYY:</label>
+  <input id="editDanaHanz" class="border p-2 w-full rounded mb-3" />
+  <label class="block mb-2">Edit DANA PRAIOFFC:</label>
+  <input id="editDanaPrai" class="border p-2 w-full rounded mb-3" />
+  <label class="block mb-2">Edit Link QRIS:</label>
+  <input id="editQRIS" class="border p-2 w-full rounded mb-3" />
+  <button onclick="saveEdit()" class="bg-green-600 text-white px-4 py-2 rounded w-full mb-4">Simpan</button>
+  <button onclick="backToDashboard()" class="bg-gray-400 text-white px-4 py-2 rounded w-full">Kembali</button>
 
-  <h3 class="text-lg font-semibold mt-6 mb-2">Semua Pengguna Login:</h3>
-  <ul id="allUserList" class="text-sm pl-4 text-gray-700 space-y-1"></ul>
+  <h3 class="text-lg font-semibold mt-6 mb-2">Semua Pengguna Login:</h3>
+  <ul id="allUserList" class="text-sm pl-4 text-gray-700 space-y-1"></ul>
 
-  <div id="editUserBox" class="hidden p-4 mt-4 bg-gray-50 rounded border">
-    <h3 class="font-semibold mb-2">Edit Pengguna</h3>
-    <input id="editUsername" class="hidden" />
-    <label class="block text-sm">Nama:</label>
-    <input id="editName" class="border p-2 w-full rounded mb-2" />
-    <label class="block text-sm">Role:</label>
-    <select id="editRole" class="border p-2 w-full rounded mb-2">
-      <option value="admin">Admin</option>
-      <option value="user">User</option>
-      <option value="kasir">Kasir</option>
-    </select>
-    <button onclick="saveUserEdit()" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Simpan Perubahan</button>
-  </div>
+  <div id="editUserBox" class="hidden p-4 mt-4 bg-gray-50 rounded border">
+    <h3 class="font-semibold mb-2">Edit Pengguna</h3>
+    <input id="editUsername" class="hidden" />
+    <label class="block text-sm">Nama:</label>
+    <input id="editName" class="border p-2 w-full rounded mb-2" />
+    <label class="block text-sm">Role:</label>
+    <select id="editRole" class="border p-2 w-full rounded mb-2">
+      <option value="admin">Admin</option>
+      <option value="user">User</option>
+      <option value="kasir">Kasir</option>
+    </select>
+    <button onclick="saveUserEdit()" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Simpan Perubahan</button>
+  </div>
 </div>
 
 <!-- ✅ TOAST -->
 <div id="toast" class="fixed bottom-5 right-5 hidden bg-green-600 text-white px-4 py-2 rounded shadow-lg z-50">
-  ✅ Berhasil disimpan!
+  ✅ Berhasil disimpan!
 </div>
 
 <!-- 📜 SCRIPT -->
 <script>
-  const userAccounts = [
-    { username: "admin", password: "adminhanzyy", role: "admin" },
-    { username: "user", password: "user123", role: "user" },
-    { username: "kasir", password: "kasir123", role: "kasir" }
-  ];
+const userAccounts = [
+  { username: "adm", password: "5", role: "admin" },
+  { username: "user", password: "user123", role: "user" },
+  { username: "kasir", password: "kasir123", role: "kasir" }
+];
 
-  let data = JSON.parse(localStorage.getItem("paymentData")) || {
-    dana: "0886282627", gopay: "82962829928", ovo: "92829290010",
-    qris: "https://via.placeholder.com/150"
-  };
+let data = JSON.parse(localStorage.getItem("paymentData")) || {
+  danaHanz: "0886282627",
+  danaPrai: "0888123456",
+  qris: "https://via.placeholder.com/150"
+};
 
-  let loginLogs = JSON.parse(localStorage.getItem("loginLogs")) || [];
+let loginLogs = JSON.parse(localStorage.getItem("loginLogs")) || [];
 
-  const welcomePanel = document.getElementById("welcomePanel");
-  const loginEl = document.getElementById("login");
-  const dash = document.getElementById("dashboard");
-  const adminPanel = document.getElementById("adminPanel");
+function saveUserName() {
+  const name = document.getElementById("inputName").value.trim();
+  if (!name) return alert("Nama tidak boleh kosong.");
+  localStorage.setItem("currentVisitorName", name);
+  document.getElementById("welcomePanel").classList.add("hidden");
+  document.getElementById("login").classList.remove("hidden");
+}
 
-  const dana = document.getElementById("dana");
-  const gopay = document.getElementById("gopay");
-  const ovo = document.getElementById("ovo");
-  const qris = document.getElementById("qris");
+function doLogin() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const user = userAccounts.find(acc => acc.username === username && acc.password === password);
+  if (!user) return alert("Login gagal!");
 
-  const editDana = document.getElementById("editDana");
-  const editGopay = document.getElementById("editGopay");
-  const editOvo = document.getElementById("editOvo");
-  const editQRIS = document.getElementById("editQRIS");
+  localStorage.setItem("currentVisitorName", localStorage.getItem("currentVisitorName") || username);
+  localStorage.setItem("currentVisitorRole", user.role);
+  addLoginLog(user.username, user.role);
+  document.getElementById("login").classList.add("hidden");
 
-  function saveUserName() {
-    const name = document.getElementById("inputName").value.trim();
-    if (!name) return alert("Nama tidak boleh kosong.");
-    localStorage.setItem("currentVisitorName", name);
-    welcomePanel.classList.add("hidden");
-    loginEl.classList.remove("hidden");
-  }
+  render();
+  document.getElementById("dashboard").classList.remove("hidden");
+  document.getElementById("adminButton").classList.toggle("hidden", user.role !== "admin");
+}
 
-  function doLogin() {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const user = userAccounts.find(acc => acc.username === username && acc.password === password);
-    if (!user) return alert("Login gagal!");
+function addLoginLog(username, role) {
+  const name = localStorage.getItem("currentVisitorName") || "Tidak Dikenal";
+  const timestamp = new Date().toLocaleString();
+  loginLogs.push({ username, name, role, timestamp });
+  localStorage.setItem("loginLogs", JSON.stringify(loginLogs));
+}
 
-    localStorage.setItem("currentVisitorName", localStorage.getItem("currentVisitorName") || username);
-    localStorage.setItem("currentVisitorRole", user.role);
-    addLoginLog(user.username, user.role);
-    loginEl.classList.add("hidden");
+function render() {
+  document.getElementById("danaHanz").textContent = data.danaHanz;
+  document.getElementById("danaPrai").textContent = data.danaPrai;
+  document.getElementById("qris").src = data.qris;
+  document.getElementById("userName").textContent = localStorage.getItem("currentVisitorName") || "-";
+  document.getElementById("userRole").textContent = localStorage.getItem("currentVisitorRole") || "-";
+}
 
-    render();
-    dash.classList.remove("hidden");
-    document.getElementById("adminButton").classList.toggle("hidden", user.role !== "admin");
-  }
+function showAdmin() {
+  if (localStorage.getItem("currentVisitorRole") !== "admin") return alert("Hanya admin yang dapat mengakses panel ini!");
+  document.getElementById("dashboard").classList.add("hidden");
+  document.getElementById("adminPanel").classList.remove("hidden");
+  document.getElementById("editDanaHanz").value = data.danaHanz;
+  document.getElementById("editDanaPrai").value = data.danaPrai;
+  document.getElementById("editQRIS").value = data.qris;
+  document.getElementById("userNameAdmin").textContent = localStorage.getItem("currentVisitorName") || "-";
+  renderAllUsers();
+}
 
-  function addLoginLog(username, role) {
-    const name = localStorage.getItem("currentVisitorName") || "Tidak Dikenal";
-    const timestamp = new Date().toLocaleString();
-    loginLogs.push({ username, name, role, timestamp });
-    localStorage.setItem("loginLogs", JSON.stringify(loginLogs));
-  }
+function renderAllUsers() {
+  const allUserList = document.getElementById("allUserList");
+  const seen = new Set();
+  allUserList.innerHTML = "";
 
-  function render() {
-    dana.textContent = data.dana;
-    gopay.textContent = data.gopay;
-    ovo.textContent = data.ovo;
-    qris.src = data.qris;
-    document.getElementById("userName").textContent = localStorage.getItem("currentVisitorName") || "-";
-    document.getElementById("userRole").textContent = localStorage.getItem("currentVisitorRole") || "-";
-  }
+  loginLogs.forEach(log => {
+    if (!seen.has(log.username)) {
+      seen.add(log.username);
+      const li = document.createElement("li");
+      li.className = "flex justify-between items-center bg-gray-100 rounded px-3 py-1";
+      li.innerHTML = `
+        <span>${log.name} (${log.username}) - Role: ${log.role}</span>
+        <div>
+          <button onclick="startEditUser('${log.username}')" class="text-blue-600 hover:underline mr-2">✏️ Edit</button>
+          <button onclick="deleteUser('${log.username}')" class="text-red-600 hover:underline">🗑️ Hapus</button>
+        </div>
+      `;
+      allUserList.appendChild(li);
+    }
+  });
+}
 
-  function showAdmin() {
-    if (localStorage.getItem("currentVisitorRole") !== "admin") return alert("Hanya admin yang dapat mengakses panel ini!");
-    dash.classList.add("hidden");
-    adminPanel.classList.remove("hidden");
-    editDana.value = data.dana;
-    editGopay.value = data.gopay;
-    editOvo.value = data.ovo;
-    editQRIS.value = data.qris;
-    document.getElementById("userNameAdmin").textContent = localStorage.getItem("currentVisitorName") || "-";
-    renderAllUsers();
-  }
+function saveEdit() {
+  data.danaHanz = document.getElementById("editDanaHanz").value;
+  data.danaPrai = document.getElementById("editDanaPrai").value;
+  data.qris = document.getElementById("editQRIS").value;
+  localStorage.setItem("paymentData", JSON.stringify(data));
+  render();
+  backToDashboard();
+  showToast("✅ Data DANA diperbarui");
+}
 
-  function renderAllUsers() {
-    const allUserList = document.getElementById("allUserList");
-    const seen = new Set();
-    allUserList.innerHTML = "";
+function backToDashboard() {
+  document.getElementById("adminPanel").classList.add("hidden");
+  document.getElementById("dashboard").classList.remove("hidden");
+}
 
-    loginLogs.forEach((log) => {
-      const key = log.username;
-      if (!seen.has(key)) {
-        seen.add(key);
-        const li = document.createElement("li");
-        li.className = "flex justify-between items-center bg-gray-100 rounded px-3 py-1";
-        li.innerHTML = `
-          <span>${log.name} (${log.username}) - Role: ${log.role}</span>
-          <div>
-            <button onclick="startEditUser('${log.username}')" class="text-blue-600 hover:underline mr-2">✏️ Edit</button>
-            <button onclick="deleteUser('${log.username}')" class="text-red-600 hover:underline">🗑️ Hapus</button>
-          </div>
-        `;
-        allUserList.appendChild(li);
-      }
-    });
-  }
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  const name = localStorage.getItem("currentVisitorName") || "Pengguna";
+  toast.textContent = `${message} oleh: ${name}`;
+  toast.classList.remove("hidden");
+  setTimeout(() => toast.classList.add("hidden"), 3000);
+}
 
-  function saveEdit() {
-    data.dana = editDana.value;
-    data.gopay = editGopay.value;
-    data.ovo = editOvo.value;
-    data.qris = editQRIS.value;
-    localStorage.setItem("paymentData", JSON.stringify(data));
-    render();
-    backToDashboard();
-    showToast("✅ Data diperbarui");
-  }
+function deleteUser(username) {
+  if (!confirm(`Yakin ingin menghapus data user "${username}"?`)) return;
+  loginLogs = loginLogs.filter(log => log.username !== username);
+  localStorage.setItem("loginLogs", JSON.stringify(loginLogs));
+  renderAllUsers();
+  showToast(`🗑️ Pengguna ${username} dihapus`);
+}
 
-  function backToDashboard() {
-    adminPanel.classList.add("hidden");
-    dash.classList.remove("hidden");
-  }
+function startEditUser(username) {
+  const user = loginLogs.find(u => u.username === username);
+  if (!user) return alert("User tidak ditemukan");
 
-  function showToast(message) {
-    const toast = document.getElementById("toast");
-    const name = localStorage.getItem("currentVisitorName") || "Pengguna";
-    toast.textContent = `${message} oleh: ${name}`;
-    toast.classList.remove("hidden");
-    setTimeout(() => toast.classList.add("hidden"), 3000);
-  }
+  document.getElementById("editUsername").value = user.username;
+  document.getElementById("editName").value = user.name;
+  document.getElementById("editRole").value = user.role;
+  document.getElementById("editUserBox").classList.remove("hidden");
+}
 
-  function deleteUser(username) {
-    if (!confirm(`Yakin ingin menghapus data user "${username}"?`)) return;
-    loginLogs = loginLogs.filter(log => log.username !== username);
-    localStorage.setItem("loginLogs", JSON.stringify(loginLogs));
-    renderAllUsers();
-    showToast(`🗑️ Pengguna ${username} telah dihapus`);
-  }
+function saveUserEdit() {
+  const username = document.getElementById("editUsername").value;
+  const newName = document.getElementById("editName").value.trim();
+  const newRole = document.getElementById("editRole").value;
 
-  function startEditUser(username) {
-    const user = loginLogs.find(u => u.username === username);
-    if (!user) return alert("User tidak ditemukan");
+  loginLogs = loginLogs.map(log => {
+    if (log.username === username) {
+      return { ...log, name: newName, role: newRole };
+    }
+    return log;
+  });
 
-    document.getElementById("editUsername").value = user.username;
-    document.getElementById("editName").value = user.name;
-    document.getElementById("editRole").value = user.role;
-    document.getElementById("editUserBox").classList.remove("hidden");
-  }
+  localStorage.setItem("loginLogs", JSON.stringify(loginLogs));
+  renderAllUsers();
+  showToast(`✏️ Data user "${username}" diperbarui`);
+  document.getElementById("editUserBox").classList.add("hidden");
+}
 
-  function saveUserEdit() {
-    const username = document.getElementById("editUsername").value;
-    const newName = document.getElementById("editName").value.trim();
-    const newRole = document.getElementById("editRole").value;
-
-    loginLogs = loginLogs.map(log => {
-      if (log.username === username) {
-        return { ...log, name: newName, role: newRole };
-      }
-      return log;
-    });
-
-    localStorage.setItem("loginLogs", JSON.stringify(loginLogs));
-    renderAllUsers();
-    showToast(`✏️ Data user "${username}" diperbarui`);
-    document.getElementById("editUserBox").classList.add("hidden");
-  }
-
-  window.addEventListener("DOMContentLoaded", () => {
-    if (localStorage.getItem("currentVisitorName")) {
-      welcomePanel.classList.add("hidden");
-      loginEl.classList.remove("hidden");
-    }
-  });
+window.addEventListener("DOMContentLoaded", () => {
+  if (localStorage.getItem("currentVisitorName")) {
+    document.getElementById("welcomePanel").classList.add("hidden");
+    document.getElementById("login").classList.remove("hidden");
+  }
+});
 </script>
 
 </body>
